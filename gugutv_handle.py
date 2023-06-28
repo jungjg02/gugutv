@@ -21,17 +21,17 @@ class Gugutv:
        
         channels = []
         sport_categories = {
-            '1': '축구',
-            '2': '농구',
-            '3': '배구',
-            '4': '야구',
-            '5': '하키',
-            '6': '럭비',
-            '7': 'LOL',
-            '8': 'E스포츠',
-            '9': 'HD',
-            '10': 'UFC',
-            '11': '테니스'
+            '1': 'soccer',
+            '2': 'basketball',
+            '3': 'volleyball',
+            '4': 'baseball',
+            '5': 'hockey',
+            '6': 'football',
+            '7': 'lol',
+            '8': 'egame',
+            '9': 'hd',
+            '10': 'ufc',
+            '11': 'tennis'
         }
 
         filterlist = list(filter(lambda x: x['onoff'] == 'on', response))
