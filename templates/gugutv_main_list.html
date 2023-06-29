@@ -49,7 +49,7 @@ $("body").on('click', '#json_btn', function(e){
 
 $("body").on('click', '#play_btn', function(e){
   e.preventDefault();
-  globalSendCommand('play_url', $(this).data('id'), $(this).data('name'), null, function(ret){
+  globalSendCommand('play_url', $(this).data('id'), $(this).data('name'), $(this).data('m3u8'), function(ret){
     if (ret.data == null) {
       notify('에러', 'danger');
       return;
@@ -71,7 +71,7 @@ $("body").on('click', '#play_btn', function(e){
 
 $("body").on('click', '#play_url_btn', function(e){
   e.preventDefault();
-  globalSendCommand('play_url', $(this).data('id'), $(this).data('name'), null, function(ret){
+  globalSendCommand('play_url', $(this).data('id'), $(this).data('name'), $(this).data('m3u8'), function(ret){
     if (ret.data == null) {
       notify('에러', 'danger');
       return;
@@ -108,8 +108,8 @@ function make_list(data) {
       str += '<td scope="col" style="width:20%; text-align:left;">'+ data[i].category + '</td>';
       str += '<td scope="col" style="width:35%; text-align:left;">'+ data[i].name + '</td>';
       buttons = '';
-      buttons += j_button('play_btn', 'PLAY', {'id':data[i].id, 'name':data[i].name}, 'success', false, true);
-      buttons += j_button('play_url_btn', 'URL', {'id':data[i].id, 'name':data[i].name}, 'info', false, true);
+      buttons += j_button('play_btn', 'PLAY', {'id':data[i].id, 'name':data[i].name, 'm3u8':data[i].m3u8}, 'success', false, true);
+      buttons += j_button('play_url_btn', 'URL', {'id':data[i].id, 'name':data[i].name, 'm3u8':data[i].m3u8}, 'info', false, true);
       buttons = j_button_group(buttons);
       str += '<td scope="col" style="width:15%; text-align:center;">' + buttons + '</td>';
       str += '</tr>';
