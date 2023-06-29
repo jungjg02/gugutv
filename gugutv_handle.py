@@ -120,13 +120,12 @@ class Gugutv:
         m3u = '#EXTM3U\n'
         for idx, item in enumerate(cls.ch_list()):
             if item['type'] in ['sports', 'livetv']:
-                url = f"/{P.package_name}/api/url.m3u8?ch_id={item['id']}&ch_title={item['name']}"
                 m3u += M3U_FORMAT.format(
                     id=item['id'],
                     title=f"{item['name']}",
                     group=item['type'],
                     ch_no=str(idx+1),
-                    url=url,
+                    url=ToolUtil.make_apikey_url(f"/{P.package_name}/api/url.m3u8?ch_id={item['id']}&ch_title={item['name']}"),
                     logo=item['logo'],
                 )
             elif item['type'] == 'livetv2':
