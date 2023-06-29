@@ -20,7 +20,10 @@ class ModuleMain(PluginModuleBase):
         if command == 'broad_list':
             ret = {'ret':'success', 'ch_list':Gugutv.ch_list()}
         elif command == 'play_url':
-            url = ToolUtil.make_apikey_url(f"/{P.package_name}/api/url.m3u8?ch_id={arg1}&ch_title={arg2}")
+            if arg3 != 'undefined':
+                url = arg3
+            else:
+                url = ToolUtil.make_apikey_url(f"/{P.package_name}/api/url.m3u8?ch_id={arg1}&ch_title={arg2}")
             ret = {'ret':'success', 'data':url, 'title': arg2}
         return jsonify(ret)
 
@@ -38,4 +41,3 @@ class ModuleMain(PluginModuleBase):
         except Exception as e: 
             P.logger.error(f'Exception:{str(e)}')
             P.logger.error(traceback.format_exc())
-
