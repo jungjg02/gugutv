@@ -1,3 +1,4 @@
+from datetime import datetime
 from tool import ToolUtil
 
 from .setup import *
@@ -5,7 +6,7 @@ from .gugutv_handle import Gugutv
 
 
 class ModuleMain(PluginModuleBase):
-
+    
     def __init__(self, P):
         super(ModuleMain, self).__init__(P, name='main', first_menu='list')
 
@@ -16,14 +17,13 @@ class ModuleMain(PluginModuleBase):
         return render_template(f'{P.package_name}_{self.name}_{page_name}.html', arg=arg)
     
     
+
     def process_command(self, command, arg1, arg2, arg3, req):
         if command == 'broad_list':
-            ret = {'ret':'success', 'ch_list':Gugutv.ch_list()}
+            updated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            return jsonify({"list": Gugutv.ch_list(), "updated_at": updated_at})
         elif command == 'play_url':
-            if arg3 != 'undefined':
-                url = arg3
-            else:
-                url = ToolUtil.make_apikey_url(f"/{P.package_name}/api/url.m3u8?ch_id={arg1}&ch_title={arg2}")
+            url = arg3 if arg3 else ToolUtil.make_apikey_url(f"/{P.package_name}/api/url.m3u8?ch_id={arg1}&ch_title={arg2}")
             ret = {'ret':'success', 'data':url, 'title': arg2}
         return jsonify(ret)
 
@@ -41,3 +41,4 @@ class ModuleMain(PluginModuleBase):
         except Exception as e: 
             P.logger.error(f'Exception:{str(e)}')
             P.logger.error(traceback.format_exc())
+
