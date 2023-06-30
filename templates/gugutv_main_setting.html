@@ -6,7 +6,8 @@
 {{ macros.m_row_end() }}
 {{ macros.m_hr() }}
 <form id='setting' name='setting'>
-{{ macros.info_text_go_buttons('api_m3u', 'M3U', [['globalCliboardBtn','클립보드에 복사', [['text', arg['api_m3u']]]]], value=arg['api_m3u'], desc=None) }}
+{{ macros.info_text_go('api_m3u', 'M3U', value=arg['api_m3u']) }}
+{{ macros.info_text_go('api_yaml', 'YAML', value=arg['api_yaml']) }}
 {{ macros.m_hr() }}
 </div>
 </form>

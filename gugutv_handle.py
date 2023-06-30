@@ -1,6 +1,7 @@
 from collections import OrderedDict
 import requests, json, re
 from flask import Response
+import yaml
 from support import d, default_headers, logger
 from tool import ToolUtil
 
@@ -176,3 +177,37 @@ class Gugutv:
                     logo=item['icon'],
                 )
         return m3u
+    
+    @classmethod
+    def make_yaml(cls):
+        data = {
+            'primary': True,
+            'code': "gugutv",
+            'title': "[GUGUTV]",
+            'year': 2023,
+            'genres': "Live",
+            'posters': 'http://gutv24.com/thema/tv/img/top_logo.png',
+            'summary': "",
+            'extras':[]
+        }
+        for idx, item in enumerate(cls.ch_list()):
+            if item['type'] in ['SPORTS', 'LIVETV']:
+                data['extras'].append({
+                'mode': "m3u8",
+                'type': 'featurette',
+                'param': ToolUtil.make_apikey_url(f"/{P.package_name}/api/url.m3u8?ch_id={item['channel_id']}&ch_title={item['name']}"),
+                'title': item['name'],
+                'thumb': item['icon']
+                })
+            elif item['type'] in ['BETFAIR', 'LIVETV2']:
+                data['extras'].append({
+                'mode': 'm3u8',
+                'type': 'featurette',
+                'param': item['url'],
+                'title': item['name'],
+                'thumb': item['icon']
+                })
+            
+
+        yaml_data = yaml.dump(data, allow_unicode=True, sort_keys=False, encoding='utf-8')
+        return yaml_data

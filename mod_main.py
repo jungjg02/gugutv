@@ -1,12 +1,13 @@
 from datetime import datetime
 from tool import ToolUtil
-
+from flask import Response
 from .setup import *
 from .gugutv_handle import Gugutv
 
 
+
 class ModuleMain(PluginModuleBase):
-    
+
     def __init__(self, P):
         super(ModuleMain, self).__init__(P, name='main', first_menu='list')
 
@@ -14,6 +15,7 @@ class ModuleMain(PluginModuleBase):
     def process_menu(self, page_name, req):
         arg = P.ModelSetting.to_dict()
         arg['api_m3u'] = ToolUtil.make_apikey_url(f"/{P.package_name}/api/m3u")
+        arg['api_yaml'] = ToolUtil.make_apikey_url(f"/{P.package_name}/api/yaml")
         return render_template(f'{P.package_name}_{self.name}_{page_name}.html', arg=arg)
     
     
@@ -38,6 +40,9 @@ class ModuleMain(PluginModuleBase):
                     return data
                 else:
                     return redirect(data)
+            elif sub == 'yaml':
+                data = Gugutv.make_yaml()
+                return Response(data, headers={'Content-Type': 'text/yaml; charset=utf-8'})
         except Exception as e: 
             P.logger.error(f'Exception:{str(e)}')
             P.logger.error(traceback.format_exc())
