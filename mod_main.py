@@ -13,7 +13,7 @@ class ModuleMain(PluginModuleBase):
         self.db_default = {
             f'{self.name}_db_version' : '1',
             f'{self.name}_auto_start' : 'False',
-            f'{self.name}_interval' : '*/5 * * * *',
+            f'{self.name}_interval' : '5',
             f'{self.name}_yaml_path' : '',
             f'{self.name}_plex_server_url' : 'http://localhost:32400',
             f'{self.name}_plex_token' : '',
