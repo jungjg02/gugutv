@@ -5,6 +5,7 @@ import yaml
 from support import d, default_headers, logger
 from tool import ToolUtil
 
+
 from .setup import P
 
 
@@ -180,13 +181,14 @@ class Gugutv:
     
     @classmethod
     def make_yaml(cls):
+        
         data = {
             'primary': True,
             'code': "gugutv",
             'title': "[GUGUTV]",
             'year': 2023,
             'genres': "Live",
-            'posters': 'http://gutv24.com/thema/tv/img/top_logo.png',
+            'posters': 'https://cdn.discordapp.com/attachments/877784202651787316/1124610187181953094/gugutv.png',
             'summary': "",
             'extras':[]
         }
