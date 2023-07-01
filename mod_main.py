@@ -9,14 +9,30 @@ from .gugutv_handle import Gugutv
 class ModuleMain(PluginModuleBase):
 
     def __init__(self, P):
-        super(ModuleMain, self).__init__(P, name='main', first_menu='list')
+        super(ModuleMain, self).__init__(P, name='main', first_menu='setting', scheduler_desc="Plex Yaml 생성 및 Plex Meta Update")
+        self.db_default = {
+            f'{self.name}_db_version' : '1',
+            f'{self.name}_auto_start' : 'False',
+            f'{self.name}_interval' : '*/5 * * * *',
+            f'{self.name}_yaml_path' : '',
+            f'{self.name}_plex_server_url' : 'http://localhost:32400',
+            f'{self.name}_plex_token' : '',
+            f'{self.name}_plex_meta_item' : '',
+            f'{self.name}_use_sports' : 'True',
+            f'{self.name}_use_betfair' : 'False',
+            f'{self.name}_use_livetv' : 'False',
+            f'{self.name}_use_livetv2' : 'False',
+        }
 
 
-    def process_menu(self, page_name, req):
+    def process_menu(self, sub, req):
         arg = P.ModelSetting.to_dict()
         arg['api_m3u'] = ToolUtil.make_apikey_url(f"/{P.package_name}/api/m3u")
         arg['api_yaml'] = ToolUtil.make_apikey_url(f"/{P.package_name}/api/yaml")
-        return render_template(f'{P.package_name}_{self.name}_{page_name}.html', arg=arg)
+        if sub == 'setting':
+            arg['is_include'] = F.scheduler.is_include(self.get_scheduler_name())
+            arg['is_running'] = F.scheduler.is_running(self.get_scheduler_name())
+        return render_template(f'{P.package_name}_{self.name}_{sub}.html', arg=arg)
     
     
 
@@ -47,3 +63,11 @@ class ModuleMain(PluginModuleBase):
             P.logger.error(f'Exception:{str(e)}')
             P.logger.error(traceback.format_exc())
 
+
+    def scheduler_function(self):
+        P.logger.debug('scheduler_function IN')
+        try:
+            Gugutv.sync_yaml_data()
+        except Exception as e:
+            P.logger.error(f'Exception:{str(e)}')
+            P.logger.error(traceback.format_exc())
