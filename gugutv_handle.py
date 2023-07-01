@@ -143,8 +143,8 @@ class Gugutv:
         return channels
     
     @classmethod
-    def get_m3u8(cls, ch_id, ch_title):
-        url = f"{cls._url}/sites/gugutv/pages/pc/pc_view.php?ch={ch_id}&title={ch_title}"
+    def get_m3u8(cls, ch_id):
+        url = f"{cls._url}/sites/gugutv/pages/pc/pc_view.php?ch={ch_id}"
         headers = {"referer": f"{cls._url}/sites/gugutv/index.php?tg=1ch&ca=0"}
 
         response = requests.get(url, headers=headers).content.decode('UTF-8')
@@ -167,7 +167,7 @@ class Gugutv:
                     title=f"{item['name']}",
                     group=item['type'],
                     ch_no=str(idx+1),
-                    url=ToolUtil.make_apikey_url(f"/{P.package_name}/api/url.m3u8?ch_id={item['channel_id']}&ch_title={item['name']}"),
+                    url=ToolUtil.make_apikey_url(f"/{P.package_name}/api/url.m3u8?ch_id={item['channel_id']}"),
                     logo=item['icon'],
                 )
             elif item['type'] in ['BETFAIR', 'LIVETV2']:
@@ -199,7 +199,7 @@ class Gugutv:
                 data['extras'].append({
                 'mode': "m3u8",
                 'type': 'featurette',
-                'param': ToolUtil.make_apikey_url(f"/{P.package_name}/api/url.m3u8?ch_id={item['channel_id']}&ch_title={item['name']}"),
+                'param': ToolUtil.make_apikey_url(f"/{P.package_name}/api/url.m3u8?ch_id={item['channel_id']}"),
                 'title': item['name'],
                 'thumb': item['icon']
                 })

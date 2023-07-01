@@ -41,7 +41,7 @@ class ModuleMain(PluginModuleBase):
             updated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             return jsonify({"list": Gugutv.ch_list(), "updated_at": updated_at})
         elif command == 'play_url':
-            url = arg3 if arg3 else ToolUtil.make_apikey_url(f"/{P.package_name}/api/url.m3u8?ch_id={arg1}&ch_title={arg2}")
+            url = arg3 if arg3 else ToolUtil.make_apikey_url(f"/{P.package_name}/api/url.m3u8?ch_id={arg1}")
             ret = {'ret':'success', 'data':url, 'title': arg2}
         return jsonify(ret)
 
@@ -52,7 +52,7 @@ class ModuleMain(PluginModuleBase):
                 data = Gugutv.make_m3u()
                 return Response(data, headers={'Content-Type': 'text/plain; charset=utf-8'})
             elif sub == 'url.m3u8':
-                mode, data = Gugutv.get_m3u8(req.args.get('ch_id'),req.args.get('ch_title'))
+                mode, data = Gugutv.get_m3u8(req.args.get('ch_id'))
                 if mode == 'text':
                     return data
                 else:
