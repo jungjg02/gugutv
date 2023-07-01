@@ -16,6 +16,13 @@ setting = {
                 'name': '목록',
             },
             {
+                'uri': 'manual',
+                'name': '매뉴얼',
+                'list': [
+                    {'uri':'README.md', 'name':'README.md'},
+                ]
+            },
+            {
                 'uri': 'log',
                 'name': '로그',
             },
