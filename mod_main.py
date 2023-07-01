@@ -49,7 +49,8 @@ class ModuleMain(PluginModuleBase):
     def process_api(self, sub, req):
         try:
             if sub == 'm3u':
-                return Gugutv.make_m3u()
+                data = Gugutv.make_m3u()
+                return Response(data, headers={'Content-Type': 'text/plain; charset=utf-8'})
             elif sub == 'url.m3u8':
                 mode, data = Gugutv.get_m3u8(req.args.get('ch_id'),req.args.get('ch_title'))
                 if mode == 'text':

@@ -211,3 +211,4 @@ pyrightconfig.json
 *.bak
 test.py
 plex_refresh.py
+test.yaml
