@@ -5,7 +5,7 @@ setting = {
     'home_module': None,
     'menu': {
         'uri': __package__,
-        'name': 'GuguTV',
+        'name': '구구TV',
         'list': [
             {
                 'uri': 'main/setting',
