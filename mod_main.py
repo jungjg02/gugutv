@@ -9,7 +9,7 @@ from .gugutv_handle import Gugutv
 class ModuleMain(PluginModuleBase):
 
     def __init__(self, P):
-        super(ModuleMain, self).__init__(P, name='main', first_menu='setting', scheduler_desc="Plex Yaml 생성 및 Plex Meta Update")
+        super(ModuleMain, self).__init__(P, name='main', first_menu='setting', scheduler_desc="GUGUTV Plex Yaml 생성 및 Plex Meta Update")
         self.db_default = {
             f'{self.name}_db_version' : '1',
             f'{self.name}_auto_start' : 'False',
@@ -66,7 +66,6 @@ class ModuleMain(PluginModuleBase):
 
 
     def scheduler_function(self):
-        P.logger.debug('scheduler_function IN')
         try:
             Gugutv.sync_yaml_data()
         except Exception as e:
